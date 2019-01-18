@@ -6,6 +6,15 @@
         "node/prefer-global/console": ["error", "always"],
         "node/prefer-global/process": ["error", "always"],
         "node/prefer-global/url-search-params": ["error", "always"],
-        "node/prefer-global/url": ["error", "always"]
+        "node/prefer-global/url": ["error", "always"],
+        "indent": ["error", "tab"],
+        "no-tabs": 0,
+        "no-console" : 0,
+        "consistent-return" : 0
+    },
+    "env": {
+        "es6": true,
+        "node": true,
+        "mocha": true
     }
 }
