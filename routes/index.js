@@ -1,38 +1,46 @@
 const express = require('express');
 const passport = require('passport');
+const ensureLoggedIn = require('connect-ensure-login');
 const Account = require('../models/user');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-	res.render('index', { user: req.user });
+	res.render('pages/index', { user: req.user });
 });
 
 router.get('/register', (req, res) => {
-	res.render('register', {});
+	res.render('pages/register', { error: req.flash('error') });
 });
 
-router.post('/register', (req, res, next) => {
-	console.log('registering user');
+router.post('/register', (req, res) => {
 	Account.register(new Account({ username: req.body.username }), req.body.password, (err) => {
 		if (err) {
-			console.log('error while user register!', err);
-			return next(err);
+			return res.render('pages/register', { error: err.message });
 		}
-
-		console.log('user registered!');
-
-		res.redirect('/');
+		passport.authenticate('local', {
+			successRedirect: '/',
+			failureRedirect: '/register',
+			failureFlash: true,
+		})(req, res, () => {});
 	});
 });
 
 router.get('/login', (req, res) => {
-	res.render('login', { user: req.user });
+	res.render('pages/login', { error: req.flash('error') });
 });
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
-	res.redirect('/');
-});
+router.post('/login', passport.authenticate('local', {
+	successReturnToOrRedirect: '/',
+	failureRedirect: '/login',
+	failureFlash: true,
+}));
+
+router.get('/profile',
+	ensureLoggedIn.ensureLoggedIn('/login'),
+	(req, res) => {
+		res.render('pages/profile', { user: req.user });
+	});
 
 router.get('/logout', (req, res) => {
 	req.logout();

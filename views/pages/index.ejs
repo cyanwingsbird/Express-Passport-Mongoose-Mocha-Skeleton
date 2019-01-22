@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+	<% include ../partials/head %>
+    <title>Login</title>
+  </head>
+  <body>
+	<% if (!user) { %>
+		<p>Welcome! Please <a href="/login">log in</a>.</p> or <a href="/register">Register</a>.</p>
+	<% } else { %>
+		<p>Hello, <%= user.username %>. View your <a href="/profile">profile</a>.</p>
+		<a href="/logout">Logout</a>
+	<% } %>
+	<% include ../partials/footScript %>
+  </body>
+</html>

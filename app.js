@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const rfs = require('rotating-file-stream');
 //  const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const lessMiddleware = require('less-middleware');
@@ -20,6 +21,20 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// create a rotating write stream
+const accessLogStream = rfs('access.log', {
+	interval: '1d', // rotate daily
+	path: path.join(__dirname, 'log'),
+});
+
+// log only 4xx and 5xx responses to console
+app.use(logger('dev', {
+	skip(req, res) { return res.statusCode < 400; },
+}));
+
+// setup the logger
+app.use(logger('combined', { stream: accessLogStream }));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -47,7 +62,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // Connect mongoose
-mongoose.connect('mongodb://localhost/users', (err) => {
+mongoose.connect('mongodb://localhost/users', { useNewUrlParser: true, useCreateIndex: true }, (err) => {
 	if (err) {
 		console.log('Could not connect to mongodb on localhost. Ensure that you have mongodb running on localhost and mongodb accepts connections on standard ports!');
 	}

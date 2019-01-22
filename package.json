@@ -9,6 +9,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bootstrap": "^4.2.1",
     "connect-ensure-login": "^0.1.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
@@ -17,12 +18,15 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "http-errors": "^1.7.1",
+    "jquery": "^3.3.1",
     "less-middleware": "^3.0.1",
     "mongoose": "^5.4.4",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
+    "popper.js": "^1.14.6",
+    "rotating-file-stream": "^1.4.0",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
@@ -30,6 +34,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^8.0.1",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "should": "^13.2.3"
   }
 }

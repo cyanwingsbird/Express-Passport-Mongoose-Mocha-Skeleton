@@ -1,2 +1,3 @@
 # Express-Passport-Mongoose-Mocha-Skeleton
-A skeleton of expressjs using passportjs, mongoose, mocha
+Everything you need for a simple Login System
+By expressjs, passportjs, mongoose, mocha, and more.
